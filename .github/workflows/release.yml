@@ -30,6 +30,13 @@ jobs:
           pip install -U pip
           python builder.py
 
+      - name: Tag commit with 'latest'
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git tag -f latest
+          git push origin latest --force
+
       - name: Upload artifacts to release
         uses: softprops/action-gh-release@v2
         with:
