@@ -1,0 +1,19 @@
+# Environnement virtuel Python
+.venv/
+
+# Dossier PyCharm / JetBrains
+.idea/
+
+# Fichiers de build
+build/
+
+# Manifest généré automatiquement
+manifest.json
+
+# Fichiers système éventuels
+.DS_Store
+Thumbs.db
+
+# __pycache__ Python
+__pycache__/
+*.pyc

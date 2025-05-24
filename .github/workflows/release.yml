@@ -1,0 +1,44 @@
+name: Build and Publish Modules
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**/module.py'
+      - '**/manifest.json'
+      - 'builder.py'
+  workflow_dispatch:
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run module builder
+        run: |
+          pip install -U pip
+          python builder.py
+
+      - name: Upload artifacts to release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          files: |
+            build/*.zip
+            manifest.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Show uploaded files
+        run: ls -lh build && cat manifest.json
